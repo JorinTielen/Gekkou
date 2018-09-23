@@ -5,7 +5,7 @@ pub struct MBC0 {
 }
 
 impl MBC0 {
-    pub fn new(data: Vec<u8>) -> MBC0 {
+    pub fn new(data: Vec<u8>) -> Self {
         MBC0 {
             rom: data,
         }
@@ -14,8 +14,11 @@ impl MBC0 {
 
 impl MBC for MBC0 {
     fn rb(&self, a: u16) -> u8 {
-        println!("rb on mbc0");
-        0
+        self.rom[a as usize]
+    }
+
+    fn rw(&self, a: u16) -> u16 {
+        (self.rb(a) as u16) | ((self.rb(a + 1) as u16) << 8)
     }
 }
 
